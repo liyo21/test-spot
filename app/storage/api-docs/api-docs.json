@@ -1,0 +1,31 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Usuarios",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://swagger.local"
+        },
+        {
+            "url": "http://test-spot-two.loc:31080"
+        }
+    ],
+    "paths": {
+        "/api/users": {
+            "get": {
+                "summary": "Mostrar usuarios",
+                "operationId": "cf5d896b7e529d4027fcb64cff848f94",
+                "responses": {
+                    "200": {
+                        "description": "Mostrar todos los usuarios."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        }
+    }
+}
