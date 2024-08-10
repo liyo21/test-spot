@@ -1,0 +1,19 @@
+2024-08-08 22:34:47,334 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-08-08 22:34:47,337 INFO supervisord started with pid 1
+2024-08-08 22:34:48,347 INFO spawned: 'octane' with pid 6
+2024-08-08 22:34:48,432 WARN exited: octane (exit status 255; not expected)
+2024-08-08 22:34:49,444 INFO spawned: 'octane' with pid 7
+2024-08-08 22:34:49,504 WARN exited: octane (exit status 255; not expected)
+2024-08-08 22:34:51,515 INFO spawned: 'octane' with pid 8
+2024-08-08 22:34:51,598 WARN exited: octane (exit status 255; not expected)
+2024-08-08 22:34:54,608 INFO spawned: 'octane' with pid 9
+2024-08-08 22:34:54,635 WARN exited: octane (exit status 255; not expected)
+2024-08-08 22:34:55,642 INFO gave up: octane entered FATAL state, too many start retries too quickly
+2024-08-08 22:36:00,310 INFO reaped unknown pid 479 (exit status 0)
+2024-08-08 22:40:44,133 INFO reaped unknown pid 566 (exit status 0)
+2024-08-08 22:41:11,210 WARN received SIGQUIT indicating exit request
+2024-08-08 22:41:26,446 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-08-08 22:41:26,448 INFO supervisord started with pid 1
+2024-08-08 22:41:27,454 INFO spawned: 'octane' with pid 7
+2024-08-08 22:41:28,783 INFO success: octane entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-08-08 22:44:40,467 INFO reaped unknown pid 135 (exit status 0)
