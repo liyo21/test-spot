@@ -8,4 +8,7 @@ use App\Http\Controllers\Api\UrlController;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-Route::get('users', [UrlController::class, 'index']);
+Route::get('urls', [UrlController::class, 'index']);
+Route::post('/url', [UrlController::class, 'create']);
+Route::get('/urls/{shortenUrl}', [UrlController::class, 'show']);
+Route::delete('/urls/{shortenUrl}', [UrlController::class, 'destroy']);
