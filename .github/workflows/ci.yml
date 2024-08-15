@@ -26,6 +26,6 @@ jobs:
           environment_name: elasticbeanstalk-us-east-2-471112937582
           version_label: ${{ github.sha }}
           region: us-east-2
-          deployment_package: deploy.zip
+          deployment_package: deployment.zip
 
 
