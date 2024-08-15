@@ -1,4 +1,4 @@
-# test-spot-backend
+# Test para Spot 2
 
 ## Descripción
 Este backend está construido utilizando Laravel 10, Octane y PHP 8.1. Su objetivo principal es generar nuevas url shortened, listarlas, consultar por una en especifico y eliminarlas.
