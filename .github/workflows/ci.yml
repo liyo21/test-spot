@@ -1,0 +1,31 @@
+name: laravel-deployment
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create ZIP deployment package
+        run: zip -r deployment.zip ./app
+
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v22
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: test-spot-backend
+          environment_name: elasticbeanstalk-us-east-2-471112937582
+          version_label: ${{ github.sha }}
+          region: us-east-2
+          deployment_package: deploy.zip
+
+
