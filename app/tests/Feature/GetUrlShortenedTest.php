@@ -10,10 +10,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class GetUrlShortenedTest extends TestCase
 {
+    use RefreshDatabase;
 
-    /**
-     * A basic feature test example.
-     */
     public function test_show_url_found(): void
     {
         $originalUrl = 'https://www.google.com';

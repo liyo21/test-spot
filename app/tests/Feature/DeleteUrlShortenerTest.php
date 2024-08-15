@@ -11,9 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class DeleteUrlShortenerTest extends TestCase
 {
     use RefreshDatabase;
-    /**
-     * A basic feature test example.
-     */
+
     public function test_delete_url_found(): void
     {
         $url = Url::create([
@@ -24,7 +22,6 @@ class DeleteUrlShortenerTest extends TestCase
         $response = $this->deleteJson('/api/urls/' . $url->shortened_url);
 
         $response->assertStatus(200);
-
         $response->assertJson([
             'status' => 'OK',
             'message' => 'The shortenUrl ' . $url->shortened_url . ' deleted',
