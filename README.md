@@ -67,3 +67,32 @@ $ php artisan key:generate
 $ php artisan test
 
 ```
+
+## Documentación de APIs
+
+Se utilizó Swagger para documentar las APIs y poder probarlas, para ello, se deben seguir los siguientes pasos
+
+```bash
+# Ingresar al directorio app
+$ cd app
+
+# Ejecutar el comando swagger para generar la libreria
+$ php artisan l5-swagger:generate
+
+```
+
+Ingresar al domino de la aplicación de la siguiente forma
+```bash
+# Ingresar al directorio app
+$ http://localhost:9000/api/documentation
+
+```
+
+En caso de haber levantado el proyecto con Docker se debe ingresar de la siguiente forma
+```bash
+# Ejecutar el comando swagger para generar la libreria
+$ docker exec -it "${COMPOSE_PROJECT_NAME}-php" php artisan l5-swagger:generate
+
+$ http://COMPOSE_PROJECT_NAME.loc:31080/api/documentation
+
+```
