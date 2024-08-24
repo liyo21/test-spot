@@ -22,8 +22,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: laravel
-          environment_name: Laravel-env
+          application_name: emolero-laravel-demo
+          environment_name: Emolero-laravel-demo-env
           version_label: "Sample"
           region: us-east-2
           deployment_package: deployment.zip
