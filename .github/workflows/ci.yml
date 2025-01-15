@@ -25,7 +25,7 @@ jobs:
           application_name: laravel-workshop-demo
           environment_name: Laravel-workshop-demo-env
           version_label: ${{ github.sha }}
-          region: us-east-2
+          region: us-east-1
           deployment_package: deployment.zip
 
 
