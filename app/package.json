@@ -1,6 +1,6 @@
 {
     "name": "test-spot-two",
-    "version": "1.11.12",
+    "version": "1.0.0",
     "description": "A Laravel v11 project with Octane",
     "author": "Eliyonai Molero",
     "private": true,
