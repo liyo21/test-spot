@@ -2,6 +2,7 @@ version: 0.2
 
 env:
   exported-variables:
+    - DB_CONNECTION
     - DB_HOST
     - DB_DATABASE
     - DB_PASSWORD
@@ -25,6 +26,7 @@ phases:
     commands:
       - composer install
       - cp .env.example .env
+      - sed -i "s/DB_CONNECTION=sqlite/DB_HOST=$DB_HOST/g" .env
       - sed -i "s/DB_HOST=127.0.0.1/DB_HOST=$DB_HOST/g" .env
       - sed -i "s/DB_DATABASE=/DB_DATABASE=$DB_DATABASE/g" .env
       - sed -i "s/DB_USERNAME=root/DB_USERNAME=$DB_USERNAME/g" .env
