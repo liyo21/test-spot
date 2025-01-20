@@ -13,7 +13,7 @@ Route::get('/', function () {
         'code'          => 200,
         'status'        => 'OK',
         'timestamp'     => new \DateTime('NOW'),
-        'response'      => config('database.connections.mysql.host'),
+        'response'      => config('database.connections.mysql.database'),
     ], 200);
 });
 
