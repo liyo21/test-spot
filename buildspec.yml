@@ -21,7 +21,7 @@ phases:
     commands:
       - php artisan migrate --force
       - npm install
-      - npm run prod
+      - npm run build
 artifacts:
   files:
     '**/*'
