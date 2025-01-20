@@ -17,6 +17,7 @@ phases:
   build:
     commands:
       composer install
+      php artisan migrate
   post_build:
     commands:
       npm install
