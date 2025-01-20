@@ -11,7 +11,7 @@ use App\Http\Controllers\Api\UrlController;
 Route::get('/', function () {
     return response()->json([
         'code'          => 200,
-        'status'        => 'Ultra OK',
+        'status'        => 'OK',
         'timestamp'     => new \DateTime('NOW'),
         'response'      => config('app.name'),
     ], 200);
