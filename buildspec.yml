@@ -13,7 +13,8 @@ phases:
       php composer-setup.php --install-dir=/usr/local/bin --filename=composer
   pre_build:
     commands:
-      cd /var/app/current/app/
+      ls -la
+      cd app/
       composer install
       npm install
 artifacts:
