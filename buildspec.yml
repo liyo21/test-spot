@@ -19,7 +19,7 @@ phases:
       composer install
   post_build:
     commands:
-      php artisan migrate
+      php artisan migrate --force
 artifacts:
   files:
     '**/*'
