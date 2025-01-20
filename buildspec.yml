@@ -11,10 +11,14 @@ phases:
       apt-get install -y php-pgsql
       curl -sS https://getcomposer.org/installer -o composer-setup.php 
       php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-  pre_build:
+  show_files:
     commands:
       ls -la
+  pre_build_composer:
+    commands:
       composer install
+  pre_build_npm:
+    commands:
       npm install
 artifacts:
   files:
