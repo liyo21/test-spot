@@ -25,7 +25,6 @@ phases:
     commands:
       - composer install
       - cp .env.example .env
-      - cat $DB_CONNECTION
       - sed -i "s/DB_CONNECTION=sqlite/DB_CONNECTION=$DB_CONNECTION/g" .env
       - sed -i "s/DB_HOST=127.0.0.1/DB_HOST=$DB_HOST/g" .env
       - sed -i "s/DB_DATABASE=/DB_DATABASE=$DB_DATABASE/g" .env
