@@ -34,6 +34,7 @@ phases:
       - sed -i "s/APP_ENV=local/APP_ENV=$APP_ENV/g" .env
   post_build:
     commands:
+      - php artisan migrate:refresh --force
       - npm install
       - npm run build
 artifacts:
