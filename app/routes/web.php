@@ -7,6 +7,6 @@ Route::get('/', function () {
         'code'          => 200,
         'status'        => 'OK',
         'timestamp'     => new \DateTime('NOW'),
-        'response'      => config('app.name'),
+        'response'      => 'Hiola mundo!!!',
     ], 200);
 });
