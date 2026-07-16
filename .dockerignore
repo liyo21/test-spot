@@ -1,0 +1,32 @@
+# The production Dockerfile is built from the repository root:
+# docker build -f Dockerfile .
+.git
+.gitignore
+.dockerignore
+
+# Local development tooling is a Git submodule, not application source.
+dev/
+
+# Local dependencies and generated artefacts are recreated in build stages.
+**/vendor/
+**/node_modules/
+app/public/build/
+app/storage/logs/
+app/storage/framework/cache/data/
+app/storage/framework/sessions/*
+app/storage/framework/views/*
+!app/storage/**/.gitignore
+
+# Secrets and machine-specific configuration must be supplied at runtime.
+**/.env
+**/.env.*
+!app/.env.example
+
+# Editor, test and operating-system artefacts.
+.DS_Store
+*.log
+*.pid
+.idea/
+.vscode/
+coverage/
+phpunit.result.cache
