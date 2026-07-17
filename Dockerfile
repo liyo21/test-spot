@@ -77,10 +77,12 @@ COPY --from=php-extensions /usr/local/etc/php/conf.d/ /usr/local/etc/php/conf.d/
 COPY --chown=octane:octane app/ ./
 COPY --from=vendor --chown=octane:octane /var/www/app/vendor ./vendor
 COPY --from=frontend --chown=octane:octane /var/www/app/public/build ./public/build
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 
 RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache \
     && php artisan package:discover --ansi \
     && chown -R octane:octane storage bootstrap/cache \
+    && chmod 0555 /usr/local/bin/docker-entrypoint \
     && printf '%s\n' \
         'opcache.enable=1' \
         'opcache.validate_timestamps=0' \
@@ -89,6 +91,8 @@ RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framewor
         > /usr/local/etc/php/conf.d/opcache-production.ini
 
 USER octane
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint"]
 
 EXPOSE 8000 10000
 
