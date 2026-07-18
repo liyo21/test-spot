@@ -13,13 +13,14 @@ RUN apt-get update \
         libjpeg62-turbo-dev \
         libonig-dev \
         libpng-dev \
+        libpq-dev \
         libssl-dev \
         libxml2-dev \
         libzip-dev \
         zlib1g-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j"$(nproc)" \
-        bcmath curl gd mbstring pcntl pdo_mysql soap sockets zip \
+        bcmath curl gd mbstring pcntl pdo_mysql pdo_pgsql soap sockets zip \
     && pecl install "redis-${REDIS_EXTENSION_VERSION}" "swoole-${SWOOLE_VERSION}" \
     && docker-php-ext-enable opcache redis swoole \
     && rm -rf /tmp/pear /var/lib/apt/lists/*
@@ -66,6 +67,7 @@ RUN apt-get update \
         libjpeg62-turbo \
         libonig5 \
         libpng16-16 \
+        libpq5 \
         libssl3 \
         libzip4 \
     && rm -rf /var/lib/apt/lists/* \
