@@ -2,10 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UrlRequest extends FormRequest
 {
@@ -24,10 +21,8 @@ class UrlRequest extends FormRequest
      */
     public function rules(): array
     {
-        Log::info("[UrlRequest][rules] Inicio de la validación");
-
         return [
-            'url' => 'required|url:http,https'
+            'url' => 'required|url:http,https',
         ];
     }
 
@@ -44,16 +39,10 @@ class UrlRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
+    protected function prepareForValidation(): void
     {
-        Log::info("[UrlRequest][failedValidation] Falló la validación la validación, se retorna respuesta");
-
-        throw new HttpResponseException(
-            response()->json([
-                'status'    => 'NOK',
-                'message'   => $validator->errors(),
-                'response'  => []
-            ], 422)
-        );
+        if (is_string($this->input('url'))) {
+            $this->merge(['url' => trim($this->input('url'))]);
+        }
     }
 }
