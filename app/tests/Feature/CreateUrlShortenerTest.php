@@ -39,16 +39,15 @@ class CreateUrlShortenerTest extends TestCase
         Log::shouldNotHaveReceived('info');
     }
 
-    public function test_create_invalid_url_returns_problem_details(): void
+    public function test_create_invalid_url_returns_standard_error_response(): void
     {
         $response = $this->postJson('/api/url', ['url' => 'google']);
 
         $response
             ->assertUnprocessable()
-            ->assertHeader('Content-Type', 'application/problem+json')
-            ->assertJsonPath('type', 'urn:test-spot:validation-error')
-            ->assertJsonPath('status', 422)
-            ->assertJsonStructure(['title', 'detail', 'instance', 'errors' => ['url']]);
+            ->assertJsonPath('status', 'NOK')
+            ->assertJsonPath('message', 'The request contains invalid data.')
+            ->assertJsonStructure(['response' => ['url']]);
     }
 
     public function test_create_duplicate_url_returns_conflict_after_normalization(): void
@@ -59,9 +58,9 @@ class CreateUrlShortenerTest extends TestCase
 
         $response
             ->assertConflict()
-            ->assertHeader('Content-Type', 'application/problem+json')
-            ->assertJsonPath('type', 'urn:test-spot:url-already-shortened')
-            ->assertJsonPath('status', 409);
+            ->assertJsonPath('status', 'NOK')
+            ->assertJsonPath('message', 'The URL has already been shortened.')
+            ->assertJsonPath('response', []);
         $this->assertDatabaseCount('urls', 1);
     }
 
@@ -88,7 +87,8 @@ class CreateUrlShortenerTest extends TestCase
 
         $response
             ->assertConflict()
-            ->assertJsonPath('type', 'urn:test-spot:url-already-shortened');
+            ->assertJsonPath('status', 'NOK')
+            ->assertJsonPath('message', 'The URL has already been shortened.');
         $this->assertDatabaseCount('urls', 1);
     }
 
@@ -122,7 +122,8 @@ class CreateUrlShortenerTest extends TestCase
 
         $response
             ->assertStatus(500)
-            ->assertHeader('Content-Type', 'application/problem+json')
-            ->assertJsonPath('type', 'urn:test-spot:internal-error');
+            ->assertJsonPath('status', 'NOK')
+            ->assertJsonPath('message', 'The request could not be completed.')
+            ->assertJsonPath('response', []);
     }
 }

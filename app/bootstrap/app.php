@@ -32,10 +32,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 return ProblemDetails::response(
                     $request,
                     422,
-                    'urn:test-spot:validation-error',
-                    'Validation failed',
                     'The request contains invalid data.',
-                    ['errors' => $exception->errors()],
+                    $exception->errors(),
                 );
             }
 
@@ -43,8 +41,6 @@ return Application::configure(basePath: dirname(__DIR__))
                 return ProblemDetails::response(
                     $request,
                     409,
-                    'urn:test-spot:url-already-shortened',
-                    'URL already shortened',
                     'The URL has already been shortened.',
                 );
             }
@@ -53,8 +49,6 @@ return Application::configure(basePath: dirname(__DIR__))
                 return ProblemDetails::response(
                     $request,
                     404,
-                    'urn:test-spot:url-not-found',
-                    'URL not found',
                     'The requested shortened URL was not found.',
                 );
             }
@@ -63,8 +57,6 @@ return Application::configure(basePath: dirname(__DIR__))
                 return ProblemDetails::response(
                     $request,
                     500,
-                    'urn:test-spot:internal-error',
-                    'Internal server error',
                     'The request could not be completed.',
                 );
             }
@@ -75,8 +67,6 @@ return Application::configure(basePath: dirname(__DIR__))
                 return ProblemDetails::response(
                     $request,
                     $status,
-                    'urn:test-spot:http-error',
-                    'HTTP error',
                     $status === 404 ? 'The requested resource was not found.' : 'The request could not be completed.',
                 );
             }
@@ -84,8 +74,6 @@ return Application::configure(basePath: dirname(__DIR__))
             return ProblemDetails::response(
                 $request,
                 500,
-                'urn:test-spot:internal-error',
-                'Internal server error',
                 'The request could not be completed.',
             );
         });

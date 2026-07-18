@@ -23,14 +23,14 @@ class DeleteUrlShortenerTest extends TestCase
         $this->assertDatabaseMissing('urls', ['id' => $url->id]);
     }
 
-    public function test_delete_url_not_found_returns_problem_details(): void
+    public function test_delete_url_not_found_returns_standard_error_response(): void
     {
         $response = $this->deleteJson('/api/urls/UNKNOWN1');
 
         $response
             ->assertNotFound()
-            ->assertHeader('Content-Type', 'application/problem+json')
-            ->assertJsonPath('type', 'urn:test-spot:url-not-found')
-            ->assertJsonPath('status', 404);
+            ->assertJsonPath('status', 'NOK')
+            ->assertJsonPath('message', 'The requested shortened URL was not found.')
+            ->assertJsonPath('response', []);
     }
 }

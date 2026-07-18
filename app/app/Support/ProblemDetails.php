@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use App\Utils\ResponseUtils;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -10,18 +11,12 @@ class ProblemDetails
     public static function response(
         Request $request,
         int $status,
-        string $type,
-        string $title,
-        string $detail,
-        array $extensions = [],
+        string $message,
+        array $response = [],
     ): JsonResponse {
-        return response()->json([
-            'type' => $type,
-            'title' => $title,
-            'status' => $status,
-            'detail' => $detail,
-            'instance' => '/'.$request->path(),
-            ...$extensions,
-        ], $status, ['Content-Type' => 'application/problem+json']);
+        return response()->json(
+            ResponseUtils::makeResponse('NOK', $message, $response),
+            $status,
+        );
     }
 }

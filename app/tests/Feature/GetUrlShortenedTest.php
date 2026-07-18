@@ -24,14 +24,14 @@ class GetUrlShortenedTest extends TestCase
             ->assertJsonPath('response.original_url', 'https://www.google.com');
     }
 
-    public function test_show_url_not_found_returns_problem_details(): void
+    public function test_show_url_not_found_returns_standard_error_response(): void
     {
         $response = $this->getJson('/api/urls/UNKNOWN1');
 
         $response
             ->assertNotFound()
-            ->assertHeader('Content-Type', 'application/problem+json')
-            ->assertJsonPath('type', 'urn:test-spot:url-not-found')
-            ->assertJsonPath('status', 404);
+            ->assertJsonPath('status', 'NOK')
+            ->assertJsonPath('message', 'The requested shortened URL was not found.')
+            ->assertJsonPath('response', []);
     }
 }
