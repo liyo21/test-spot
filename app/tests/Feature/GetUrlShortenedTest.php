@@ -3,10 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Url;
-use Tests\TestCase;
-use Illuminate\Support\Str;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class GetUrlShortenedTest extends TestCase
 {
@@ -14,38 +12,26 @@ class GetUrlShortenedTest extends TestCase
 
     public function test_show_url_found(): void
     {
-        $originalUrl = 'https://www.google.com';
-
         $url = Url::create([
-            'original_url'  => $originalUrl,
-            'shortened_url' => Str::random(8)
+            'original_url' => 'https://www.google.com',
+            'shortened_url' => 'GOOGLE01',
         ]);
 
-        $response = $this->getJson('/api/urls/' . $url->shortened_url);
+        $response = $this->getJson('/api/urls/'.$url->shortened_url);
 
-        $response->assertStatus(200);
-
-        $response->assertJson([
-            'status' => 'OK',
-            'message' => 'The shortenUrl ' . $url->shortened_url . ' was found',
-            'response' => [
-                'original_url' => $originalUrl
-            ]
-        ]);
+        $response
+            ->assertOk()
+            ->assertJsonPath('response.original_url', 'https://www.google.com');
     }
 
-    public function test_show_url_not_found(): void
+    public function test_show_url_not_found_returns_problem_details(): void
     {
-        $shortenUrl = 'KVDtiv123';
+        $response = $this->getJson('/api/urls/UNKNOWN1');
 
-        $response = $this->getJson('/api/urls/' . $shortenUrl);
-
-        $response->assertStatus(404);
-
-        $response->assertJson([
-            'status'    => 'NOK',
-            'message'   => 'The shortenUrl ' . $shortenUrl . ' was not found',
-            'response'  => []
-        ]);
+        $response
+            ->assertNotFound()
+            ->assertHeader('Content-Type', 'application/problem+json')
+            ->assertJsonPath('type', 'urn:test-spot:url-not-found')
+            ->assertJsonPath('status', 404);
     }
 }

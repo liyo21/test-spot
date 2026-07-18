@@ -55,6 +55,8 @@ ARG WWWGROUP=1000
 
 ENV APP_ENV=production \
     APP_DEBUG=false \
+    LOG_CHANNEL=stderr \
+    LOG_LEVEL=warning \
     OCTANE_SERVER=swoole \
     PHP_OPCACHE_ENABLE=1
 

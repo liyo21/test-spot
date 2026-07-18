@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Contracts\ShortCodeGenerator;
+use App\Services\RandomShortCodeGenerator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -13,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(ShortCodeGenerator::class, RandomShortCodeGenerator::class);
     }
 
     /**

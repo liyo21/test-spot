@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\UrlNotFoundException;
 use App\Models\Url;
+use App\Services\UrlShortener;
 use App\Utils\ResponseUtils;
-use Illuminate\Http\Request;
 use App\Http\Requests\UrlRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 
 /**
@@ -226,59 +226,45 @@ class UrlController extends Controller
      * )
      */
 
-    public function __construct()
+    public function __construct(private readonly UrlShortener $urlShortener)
     {
     }
 
     public function index() : JsonResponse
     {
-        Log::info("[UrlController][index] Inicia el método en el controlador");
         $getUrls = Url::all()
                         ->makeHidden(['id','created_at', 'updated_at']);
 
         $response = ResponseUtils::makeResponse('OK', 'Url lists', $getUrls);
 
-        Log::info("[UrlController][index] Se retorna respuesta");
 
         return response()->json($response, 200);
     }
 
     public function create(UrlRequest $request) : JsonResponse
     {
-        Log::info("[UrlController][create] Inicia el método en el controlador");
 
-        $attributes     = $request->validated();
-        $originalUrl    = $attributes['url'];
-        $shortenedUrl   = Url::shortenUrl($originalUrl);
+        $url = $this->urlShortener->shorten($request->validated('url'));
 
         $data = [
-            'original_url'  => $originalUrl,
-            'shortened_url' => $shortenedUrl
+            'original_url'  => $url->original_url,
+            'shortened_url' => $url->shortened_url,
         ];
 
         $response = ResponseUtils::makeResponse('OK', 'Url Shortened stored correctly', $data);
-
-        Log::info("[UrlController][create][ ".$originalUrl." ] Se envía respuesta");
 
         return response()->json($response, 200);
     }
 
     public function show($shortenUrl) : JsonResponse
     {
-        Log::info("[UrlController][show] Inicia el método en el controlador");
 
-        $data    = [];
         $findUrl = Url::where('shortened_url', $shortenUrl)->first();
 
         if (!$findUrl) {
-            Log::info("[UrlController][show] Url no encontrada, se retorna respuesta");
-
-            $response = ResponseUtils::makeResponse('NOK', 'The shortenUrl '.$shortenUrl.' was not found', $data);
-
-            return response()->json($response, 404);
+            throw new UrlNotFoundException();
         }
 
-        Log::info("[UrlController][show] Url encontrada, se retorna respuesta");
         $data = [
             'original_url'  => $findUrl->original_url,
         ];
@@ -289,22 +275,15 @@ class UrlController extends Controller
 
     public function destroy($shortenUrl) : JsonResponse
     {
-        Log::info("[UrlController][destroy] Inicia el método en el controlador");
 
-        $data   = [];
         $url    = Url::where('shortened_url', $shortenUrl)->first();
 
         if (!$url) {
-            Log::info("[UrlController][show] Url no encontrada, se retorna respuesta");
-
-            $response = ResponseUtils::makeResponse('NOK', 'The shortenUrl '.$shortenUrl.' was not found', $data);
-
-            return response()->json($response, 404);
+            throw new UrlNotFoundException();
         }
 
-        Log::info("[UrlController][show] Url eliminada, se retorna respuesta");
         $url->delete();
-        $response = ResponseUtils::makeResponse('OK', 'The shortenUrl '.$shortenUrl.' deleted', $data);
+        $response = ResponseUtils::makeResponse('OK', 'The shortenUrl '.$shortenUrl.' deleted', []);
 
         return response()->json($response, 200);
 
